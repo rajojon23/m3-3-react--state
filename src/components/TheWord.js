@@ -16,15 +16,15 @@ const TheWord = (props) => {
 	let word = props.word;
 	let letter = props.letter;
 
-	console.log("received the word",word.str );
-	console.log("received the letter",letter );
+	// console.log("received the word",word.str );
+	// console.log("received the letter",letter );
 
 	wordObj.str = word.str; 
 
 
 	if(!filled){
 		for (let i = 0; i < word.str.length; i++) {
-			console.log("adding into wordobj");
+			// console.log("adding into wordobj");
 			wordObj.revealed.push("");
 		}
 	}
@@ -35,8 +35,8 @@ const TheWord = (props) => {
 
 
 
-	console.log("theWordObj", wordObj);
-	console.log("revealed is", revealed);
+	// console.log("theWordObj", wordObj);
+	// console.log("revealed is", revealed);
 
 
 
@@ -56,33 +56,33 @@ const TheWord = (props) => {
 
     }
     else{
-      console.log(`${word.str} does NOT contain the letter ${letter}`);
+      // console.log(`${word.str} does NOT contain the letter ${letter}`);
     }
-
-    console.log("revealed", wordObj.revealed);
-
-	
-	console.log("lauching loop");
+// 
+//     console.log("revealed", wordObj.revealed);
+// 
+// 	
+// 	console.log("lauching loop");
 
 
 
 	for (let i = 0; i < wordObj.str.length; i++) {
-		console.log('revealed.revealed[i]', wordObj.revealed[i]);
+		// console.log('revealed.revealed[i]', wordObj.revealed[i]);
 		//has to make sure that wordObj.revealed[i] is an existing value
 		if(wordObj.revealed[i] !== "" && wordObj.revealed[i] !== undefined){
 			lines = lines.concat(wordObj.revealed[i], " ");
-			console.log("revealed char is not empty");
+			// console.log("revealed char is not empty");
 
 			// setRevealed({ revealed : wordObj.revealed });
 		}
 		else{
 			lines = lines.concat(' _ ');//short line underneath the displayed letter, longer line does not show well
-			console.log("revealed char is empty");
+			// console.log("revealed char is empty");
 		}
 	} 
 
 
-	console.log("lines", lines);
+	// console.log("lines", lines);
 
 
 	return (

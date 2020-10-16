@@ -15,14 +15,14 @@ import { colors, contentWidth } from "./GlobalStyles";
 
 let initialGameState = { started: false, over: false, win: false };
 let the_usedLetters = [];//will be passed as state to Keyboard
-let wrongLetters = [];
+let wrongLetters = [];//will be passed as state to DeadLetters
 
 let wordObj = {
   str: "",
   revealed: [],
 }
 
-let the_ltr = 'test';
+let the_ltr = '';
 
 
 
@@ -56,14 +56,11 @@ const App = () => {
 
   const getNewWord = () => {
     let rand_pos = Math.floor(Math.random() * words.length);
-
-    // console.log(words[rand_pos]);
     return words[rand_pos]; 
   }
 
 
   const handleGuess = (ltr) => {
-    // console.log("ltr", ltr.target.textContent);
 
     the_ltr = ltr.target.textContent;
 
@@ -74,18 +71,18 @@ const App = () => {
     setUsedLetters([...the_usedLetters]);
 
 
-    console.log("handleGuess called");
-
-
-
     if (word.str.indexOf(the_ltr) > -1){
-      console.log(`${word.str} contains the letter ${the_ltr}`);
-    
+      // console.log(`${word.str} contains the letter ${the_ltr}`);
+
+        for(var i=0; i<word.str.length;i++) {
+            if (word.str[i] === the_ltr){
+              wordObj.revealed[i] = the_ltr;
+            }
+        }    
 
     }
     else{
-      console.log(`${word.str} does NOT contain the letter ${the_ltr}`);
-      
+      // console.log(`${word.str} does NOT contain the letter ${the_ltr}`);
 
       wrongLetters.push(the_ltr);
       setWrongGuesses([...wrongLetters]);
@@ -93,11 +90,32 @@ const App = () => {
     }
 
 
+    //GAME HAS ENDED, guessed wrong 10 times
+    if(wrongLetters.length == 10 ){
+
+      if(wordObj.revealed.includes("") ){
+        // "USER HAS LOST");
+        handleEndGame("lose");
+      }
+      else{
+        // ("USER HAS WON");
+        handleEndGame("win");
+      }
+
+    }
+    else{//GAME HAS ENDED, but uer still has guesses left
+      if(!wordObj.revealed.includes("") ){
+        //user has won if he found the word (wordObj.revealed doesn't have empty strings as items)
+        handleEndGame("win");
+      }
+    }
+    
+
 
   };
 
   const handleReset = () => {
-    the_usedLetters = [];//will be passed as state to Keyboard
+    the_usedLetters = [];
     wrongLetters = [];
 
 
@@ -109,8 +127,17 @@ const App = () => {
 
     the_ltr = '';
 
-    setGame({ ...game, started: true });
-    setWord({str : getNewWord()});
+    setGame({ ...game, started: true });//make sure that game started is true
+
+    let new_word = getNewWord();//no choice to put the new word in a variable, the 'word' variable updates this way, otherwise it's one render 'behind'
+
+    setWord({str : new_word});
+
+    console.log("the wod got on reset is", new_word);
+
+    for (let i = 0; i < new_word.length; i++) {
+      wordObj.revealed.push("");//refill the revealed array with empty strings, important become its length is needed
+    }
     setUsedLetters([...the_usedLetters]);
     setWrongGuesses([...wrongLetters]);
     
@@ -119,7 +146,20 @@ const App = () => {
 
   };
 
-  console.log("App return() called");
+
+
+  const handleEndGame = (win) => {
+
+
+    setGame({ ...game, over: true, win: win });
+    // alert(`Game Over! You ${win ? "win" : "lose"}`);
+    alert(`Game Over! You ${win}`);
+
+
+
+
+  };
+
   return (
     <Wrapper>
       {/* <GameOverModal /> */}

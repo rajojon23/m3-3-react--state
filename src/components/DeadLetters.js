@@ -16,7 +16,7 @@ const DeadLetters = (props) => {
       <h2>Dead Letters</h2>
       <List>{
         wrongGuesses.map((guess) => {
-            return <Letter>{guess}</Letter>;
+            return <Letter key={guess}>{guess}</Letter>;
         })
       }
       </List>
