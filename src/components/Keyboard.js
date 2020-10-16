@@ -14,7 +14,7 @@ const Keyboard = (props) => {
 // const [usedLetters, setUsedLetters] = useState(props.usedLetters);
 let onClickFunc = props.onClickFunc;
 
-
+ 
 return <Wrapper>{
 
 
