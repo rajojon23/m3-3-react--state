@@ -3,9 +3,43 @@ import styled from "styled-components";
 
 import { colors } from "./GlobalStyles";
 
-const Button = ({ onClickFunc, children }) => (
-  <Wrapper onClick={onClickFunc}>{children}</Wrapper>
-);
+// const Button = ({ onClickFunc, children }, props) => {
+const Button = (props) => {
+
+
+    let onClickFunc = props.onClickFunc;
+    let children = props.children;
+    let game = props.game;
+    // let { onClickFunc, children } = props.onClickFunc ;
+
+    if(children === "START" && game.started) {
+      children = "PAUSE";
+    }
+    else if(children === "PAUSE" && game.started) {
+      children = "RESUME";
+    }
+    else {
+      
+    }
+
+    if(typeof onClickFunc  != "undefined"){
+      return (
+       <Wrapper onClick={onClickFunc}>{children}</Wrapper>
+      );      
+    }
+    else{
+      return (
+       <Wrapper>{children}</Wrapper>
+      ); 
+    }
+
+
+
+};
+
+
+
+
 
 const Wrapper = styled.button`
   background: #fff;

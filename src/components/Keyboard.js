@@ -1,14 +1,37 @@
-import React from "react";
+import React , { useState } from 'react';
 import styled from "styled-components";
+import letters from "../data/letters.json";
 import LetterKey from "./LetterKey";
+
 
 import { colors, contentWidth } from "./GlobalStyles";
 
-const Keyboard = ({}) => (
-  <Wrapper>
-    <LetterKey />
-  </Wrapper>
-);
+
+
+const Keyboard = (props) => {
+
+
+// const [usedLetters, setUsedLetters] = useState(props.usedLetters);
+let onClickFunc = props.onClickFunc;
+
+
+return <Wrapper>{
+
+
+  letters.map((letter) =>{
+
+      return <LetterKey 
+                key={letter}
+                letter={letter}
+                usedLetters={props.usedLetters}
+                onClickFunc={onClickFunc}
+              />;
+  }) 
+}</Wrapper>;
+  
+    
+  
+};
 
 const Wrapper = styled.div`
   background: ${colors.yellow};
